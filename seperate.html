@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seperate sprite sheet demo</title>
+    <script src="https://gocscript.000webhostapp.com/goc.js"></script>
+</head>
+<body>
+    Images starting src : <input id="source" value="https://gocscript.000webhostapp.com/Miho/Casual/casual_"> <br>
+    Images Count : <input id="no" value="6"> <br>
+    flip : <input id="flip" value="0"><br>
+    speed : <input id="speed" value="5"><br>
+    <button id="restart">RESTART</button>
+    <script>
+        goc.createCanvas(500, 500);
+
+        var source = document.getElementById("source");
+
+        var count = document.getElementById("no");
+
+        var flip = document.getElementById("flip");
+
+        var speed = document.getElementById("speed");
+
+        var restart = document.getElementById("restart");
+
+        var images;
+        
+
+        var opt = {}
+
+        var sprite;
+
+        restart.onclick = () =>{
+            opt.imageCount = count.value;
+            opt.flip = Number(flip.value);
+            opt.speed = Number(speed.value);
+            images = goc.preload( [source.value], ["s", "png"], Number(count.value) );
+            sprite = goc.seperateSprite( 220, 20, 150, 300, opt );
+            sprite.setOptions(opt);
+            sprite.src( images[0] );
+            goc.stop();
+            goc.start();
+        }
+
+
+        goc.update((e, c)=>{
+
+        });
+
+        goc.draw((c, e)=>{
+            c.clearRect(0, 0, c.canvas.width, c.canvas.height);
+            sprite.draw( c, e, opt );
+        });
+    </script>
+</body>
+</html>

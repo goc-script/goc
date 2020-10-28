@@ -1,0 +1,361 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>GOC Documentation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,600,700,800,900" rel="stylesheet">
+    <link rel="stylesheet" href="scribbler-global.css">
+    <link rel="stylesheet" href="scribbler-doc.css">
+    <link rel="author" href="humans.txt">
+  </head>
+  <body>
+    <div class="doc__bg"></div>
+    <nav class="header">
+      <h1 class="logo">GOC <span class="logo__thin">doc</span></h1>
+      <ul class="menu">
+        <div class="menu__item toggle"><span></span></div>
+        <li class="menu__item"><a href="" class="link link--dark"><i class="fa fa-github"></i> Github</a></li>
+        <li class="menu__item"><a href="index.html" class="link link--dark"><i class="fa fa-home"></i> Home</a></li>
+      </ul>
+    </nav>
+    <div class="wrapper">
+      <aside class="doc__nav">
+        <ul>
+          <li class="js-btn selected">Tutorial</li>
+        </ul>
+      </aside>
+      <article class="doc__content">
+        <section class="js-section">
+          <h3 class="section__title">Get Started</h3>
+          <p>start by creating canvas and GameLoop</p>
+          <h3 class="section__title">Creating Canvas</h3>
+          <p>create canvas with desired width and height 
+            by default the id of canvas is "canvas"
+          </p>
+          <div class="code__block code__block--notabs">
+            <pre class="code code--block">
+              <code>
+                goc.createCanvas( width, height, id );
+
+                goc.createCanvas( width, height ); // id is "canvas"
+              </code>
+            </pre>
+            </div>
+            <h3 class="section__title">Game Loop</h3>
+            <h4>1) Update</h4>
+            <p>goc.update( ) function updates game variables before they draw on to the screen<br>
+              "dt" is time between each frame (also called elapsed)<br>
+              ctx is context of our canvas
+            </p>
+            <div class="code__block code__block--notabs">
+              <pre class="code code--block">
+                <code>
+                  goc.update((dt, ctx) =>{
+
+                  });
+                </code>
+              </pre>
+              </div>
+              <h4>2) Draw</h4>
+            <p>goc.draw( ) function draws game variables after they updated in goc.update( ) function <br>
+              "dt" is time between each frame (also called elapsed)<br>
+              ctx is context of our canvas
+            </p>
+            <div class="code__block code__block--notabs">
+              <pre class="code code--block">
+                <code>
+                  goc.draw((ctx, dt) =>{
+
+                  });
+                </code>
+              </pre>
+            </div>
+              <h4>3) Start GameLoop</h4>
+            <p>
+              Triggers the update and draw function
+            </p>
+            <div class="code__block code__block--notabs">
+              <pre class="code code--block">
+                <code>
+                  goc.start();
+                </code>
+              </pre>
+              </div>
+              <h4>Terminating The GameLoop</h4>
+            <p>
+              use this function in case you want to stop game loop
+            </p>
+            <div class="code__block code__block--notabs">
+              <pre class="code code--block">
+                <code>
+                  goc.stop();
+                </code>
+              </pre>
+          </div>
+        </section>
+        <h2>SpriteSheet Animation With Single Image</h2>
+            <p>
+              before we even animate sprites lets first preload them
+            </p>
+            <h3>PRELOAD SEPERATE IMAGES</h3>
+            <p>Seperate images means  all frames needed for animation avaliable in one single image as shown below</p>
+            <img src="https://gocscript.000webhostapp.com/enemie.png">
+            <div class="code__block code__block--notabs">
+              <pre class="code code--block">
+                <code>
+                let loadedImage = goc.preload( ["src1, src2, src3, src4"], ["combined/seperate", "png/jpg/jpeg"], imageCount );
+
+                Example :- (lets load above image)
+
+                //should not inculde .png or .jpg after source ... pass it in array in second parameter
+
+                let loadedImage = goc.preload( ["enemy"], ["combined", "png"] ); // Note we didnt write "enemy.png"
+                </code>
+              </pre>
+              </div>
+              <h4>loadedImage variable is array of loaded Images</h4>
+              <h4>Lets Animate the loaded image</h4>
+            <p>Now we have image <br>
+              goc.combinedSprit( x, y, width, height, imageInformation ) function animate sprites <br>
+              we have to give some information about image as Object <br>
+              - image we want to animate <br>
+              - imageWidth<br>
+              - imageHeight <br>
+              - columns <br>
+              - rows <br>
+              Thats it!! <br>
+              You can also change (optional) <br>
+              - speed (speed of animation)<br>
+              - pose  (which portion of "y" should animate)
+
+
+            </p>
+            <div class="code__block code__block--notabs">
+              <pre class="code code--block">
+                <code>
+                  
+                  //Load Image
+                  let loadedImage = goc.preload( ["enemy.png"], ["c", "png"] );
+
+                  //information about Image
+                  let imageInformation = {
+                  &nbsp&nbsp&nbspimage : loadedImage[0],
+                  &nbsp&nbsp&nbspimageWidth : 699,   
+                  &nbsp&nbsp&nbspimageHeight : 357,
+                  &nbsp&nbsp&nbspcols : 5,
+                  &nbsp&nbsp&nbsprows : 2
+                  }
+                  //goc.combinedSprite( x, y, width, height, imageInformation );
+
+                  let sprite = goc.combinedSprite( 10, 10, 50, 100, imageInformation);
+
+                  //set information to sprite
+
+                  sprite.setOptions( imageInformation );
+
+                  //GameLoop - update function
+                  goc.update((dt, ctx)=>{
+
+                  });
+
+                  //GameLoop - draw function
+                  goc.draw((ctx, dt)=>{
+                    c.clearRect( 0, 0, c.canvas.width, c.canvas.height );
+
+                    &nbsp&nbsp&nbsp&nbsp//Draw animation on screen
+                    &nbsp&nbsp&nbsp&nbspsprite.draw(ctx, dt, imageInformation);
+                  });
+
+                  //start the game loop
+                  goc.start();
+                </code>
+              </pre>
+              <a href="combined.html"><h2>Click Here To Play With Demo</h2></a>
+
+
+
+                <h2 class="section__title">SpriteSheet Animate With Multiple Images</h2>
+                <h3>Preload multiple images</h3>
+                <p>All images should follow naming like this<br>
+                  casual_000.png <br>
+                  casual_001.png <br>
+                  casual_002.png <br>
+                  casual_003.png <br>
+                  casual_004.png <br>
+                  casual_005.png <br>
+                  so you can simple say preload <b>casual_</b>
+                </p>
+                <div class="code__block code__block--notabs">
+                  <pre class="code code--block">
+                    <code>
+                      let loadedImages = goc.preload( ["casual_"], ["seperate", "png"] );
+                    </code>
+                  </pre>
+                  </div>
+                  <h4>Animate multiple images !</h4>
+                  <p>
+                    goc.seperateSprite( x, y, width, height, information )
+                  </p>
+                  <div class="code__block code__block--notabs">
+                    <pre class="code code--block">
+                      <code>
+                        //preload multiple images <br>
+                        let loadedImages = goc.preload( ["casual_"], ["s", "png"], 6 );
+
+                        //information needed for animator function
+                        var information = {
+                          imageCount : 6,
+                          flip : false,
+                          speed : 5
+                        }
+
+                        //spritAnimator
+                        let sprite = goc.seperateSprite( 10, 10, 50, 100, information);
+
+                        //set information to animator
+                        sprite.setOptions( information );
+
+                        //NOTE:- always setOptions() before src()
+
+                        //source of our images (preloaded images)
+                        sprite.src( loadedImages[0] );
+
+                        //GameLoop - update function
+                        goc.update((dt, c)=>{
+
+                        });
+
+                        //GameLoop - draw function
+                        goc.draw((c, dt)=>{
+                          c.clearRect( 0, 0, c.canvas.width, c.canvas.height );
+
+                          //start drawing the animation on screen
+                          sprite.draw( c, dt, information );
+                        });
+
+                        //start the gameloop
+                        goc.start();
+                      </code>
+                    </pre>
+                    </div>
+                    <h3><a href="seperate.html"> Click here to play demo</a></h3>
+                    <h3>JoyStick (for ANDROID devices)</h3>
+                    <p>Any object that have x,y values can be controlled</p>
+                    <p>goc.createJoystick( object )</p>
+                    <div class="code__block code__block--notabs">
+                      <pre class="code code--block">
+                        <code>
+                          var box = goc.box( 100, 100 ); //BOX object with x, y properties as its position
+
+                          //controls box
+                          goc.createJoystick( box );
+
+                          goc.update((e, c)=>{
+
+                          });
+
+                          goc.draw((c, e)=>{
+                            c.clearRect( 0, 0, c.canvas.width, c.canvas.height );
+                            box.draw(c);
+                          });
+
+                          goc.start();
+
+
+                        </code>
+                      </pre>
+                    </div>
+                    <h2>You can also know which direction object moving!!</h2>
+                    <p>
+                      goc.jRight( ), goc.jLeft( ), goc.jUp( ), goc.jDown( ) <br>
+                       these function take another function as parameter <br>
+                       and that callback functions trigger respective to its direction
+                    </p>
+                    <pre class="code code--block">
+                      <code>
+                        //previous code....
+
+                        goc.update((e, c)=>{
+                          goc.jRight(()=>{
+                            //This function run only when box moving right side
+                          });
+                          goc.jLeft(()=>{
+                            //This function run only when box moving left direction
+                          });
+
+                          //SAME FOR goc.jUp( ), goc.jDown( )
+                        });
+
+                        //Next code aswell...
+                      </code>
+                    </pre>
+                    <h3>By default the box move respective to the length we streched joystick <br> you can set this value constant 
+                    <br>
+                    goc.createJoystick( object, { default : false, power : 100 } );
+                      </h3>
+                    <pre class="code code--block">
+                      <code>
+                        goc.createJoystick(box, {
+                          default : false,
+                          power : 100
+                        })
+                      </code>
+                    </pre>
+                    <h1><a href="joystick.html">Click here to play with Demo (for Android)</a></h1>
+
+                    <h1>TILEMAP, COLLISION DETECTION.... (Under Development)</h1>
+
+
+      </article>
+                        <!-- <section class="js-section">
+          <h3 class="section__title">Configuration</h3>
+          <p>Learn how to configure settings for Scribbler, such as your syntax highlighting preference and the default saving folder location.</p>
+          <table id="customers">
+            <tr>
+              <th>Options</th>
+              <th>Value</th>
+              <th>Default</th>
+            </tr>
+            <tr>
+              <td>encryption</td>
+              <td>encrypt all notes before saving. If turned on, it requires password to open the file.</td>
+              <td>false</td>
+            </tr>
+            <tr>
+              <td>highlighting</td>
+              <td>Show syntax highlight on markdown text.</td>
+              <td>true</td>
+            </tr>
+            <tr>
+              <td>prettyTable</td>
+              <td>Render table with Scribbler’s pretty table style.</td>
+              <td>true</td>
+            </tr>
+          </table>
+          <p>Malis percipitur an pro. Pro aperiam persequeris at, at sonet sensibus mei, id mea postulant definiebas concludaturque. Id qui malis abhorreant, mazim melius quo et. At eam altera dolorum, case dicant lobortis ius te, ad vel affert oportere reprehendunt. Quo no verterem deseruisse, mea brute postea te, ne per tacimates suavitate vituperatoribus.</p>
+          <hr />
+        </section> 
+        <section class="js-section">
+          <h3 class="section__title">Keybindings</h3>
+          <p>Lorem ipsum dolor sit amet, scripta tibique indoctum sit ei, mel inani aeterno ad. Facer oratio ex per. At eam movet verear, in sea brute patrioque disputando, usu nonumes torquatos an. Ex his quaerendum intellegebat, ut vel homero accusam. Eum at debet tibique, in vocibus temporibus adversarium sed. Porro verear eu vix, ne usu tation vituperata.</p>
+          <p>Malis percipitur an pro. Pro aperiam persequeris at, at sonet sensibus mei, id mea postulant definiebas concludaturque. Id qui malis abhorreant, mazim melius quo et. At eam altera dolorum, case dicant lobortis ius te, ad vel affert oportere reprehendunt. Quo no verterem deseruisse, mea brute postea te, ne per tacimates suavitate vituperatoribus.</p>
+          <p>Malis percipitur an pro. Pro aperiam persequeris at, at sonet sensibus mei, id mea postulant definiebas concludaturque. Id qui malis abhorreant, mazim melius quo et. At eam altera dolorum, case dicant lobortis ius te, ad vel affert oportere reprehendunt. Quo no verterem deseruisse, mea brute postea te, ne per tacimates suavitate vituperatoribus.</p>
+          <hr />
+        </section>
+        <section class="js-section">
+          <h3 class="section__title">Issues</h3>
+          <p>Lorem ipsum dolor sit amet, scripta tibique indoctum sit ei, mel inani aeterno ad. Facer oratio ex per. At eam movet verear, in sea brute patrioque disputando, usu nonumes torquatos an. Ex his quaerendum intellegebat, ut vel homero accusam. Eum at debet tibique, in vocibus temporibus adversarium sed. Porro verear eu vix, ne usu tation vituperata.</p>
+          <p>Malis percipitur an pro. Pro aperiam persequeris at, at sonet sensibus mei, id mea postulant definiebas concludaturque. Id qui malis abhorreant, mazim melius quo et. At eam altera dolorum, case dicant lobortis ius te, ad vel affert oportere reprehendunt. Quo no verterem deseruisse, mea brute postea te, ne per tacimates suavitate vituperatoribus.</p>
+        </section>
+      </article>
+    </div>
+
+    <footer class="footer">Scribbler is a free HTML template created exclusively for <a href="https://tympanus.net/codrops/" target="_blank" class="link link--light">Codrops</a>.</footer>-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="scribbler.js"></script>
+  </body>
+</html>

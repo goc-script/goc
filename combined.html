@@ -1,0 +1,70 @@
+<script src="https://gocscript.000webhostapp.com/goc.js"></script>
+
+Image Source : <input id="source" value="https://gocscript.000webhostapp.com/enemie.png"> <br>
+
+Image Width  :  <input id="width" value="699"> <br>
+
+Image Height : <input id="height" value="357"> <br>
+
+columns&nbsp;&nbsp&nbsp&nbsp &nbsp;&nbsp&nbsp&nbsp      : <input id="cols" value="5">  <br>
+
+rows&nbsp;&nbsp&nbsp&nbsp &nbsp;&nbsp&nbsp&nbsp&nbsp;&nbsp&nbsp         : <input id="rows" value="2"> <br>
+
+speed&nbsp&nbsp&nbsp;&nbsp&nbsp&nbsp&nbsp;&nbsp&nbsp&nbsp         : <input id="speed" value="5">  <br>
+pose&nbsp&nbsp&nbsp;&nbsp&nbsp&nbsp&nbsp;&nbsp&nbsp&nbsp         : <input id="pose" value="0"> <br>
+
+
+<button id="restart">Restart</button> <br>
+
+<body>
+    <script>
+        goc.createCanvas(600, 600);
+
+        var source = document.getElementById("source");
+
+        var width = document.getElementById("width");
+
+        var height = document.getElementById("height");
+
+        var cols = document.getElementById("cols");
+
+        var rows = document.getElementById("rows");
+
+        var speed = document.getElementById("speed");
+
+        var btn = document.getElementById("restart");
+
+        var pose = document.getElementById("pose");
+
+        var a = new Image();
+
+        var opt = {};
+        var sp;
+
+        btn.onclick = () =>{
+            a.src = source.value;
+            opt.image = a;
+            opt.imageWidth = width.value;
+            opt.imageHeight = height.value;
+            opt.cols = cols.value;
+            opt.rows = rows.value;
+            opt.speed = speed.value;
+            opt.pose = pose.value;
+            opt.fix = 8;
+            sp = goc.combinedSprite(220, 220, 150, 300, opt);
+            sp.setOptions(opt);
+            goc.stop();
+            goc.start();
+        }
+
+        goc.update((dt, c)=>{
+
+        });
+
+        goc.draw((c, dt)=>{
+            c.clearRect(0, 0, c.canvas.width, c.canvas.height);
+            sp.draw(c, dt, opt);
+        });
+
+    </script>
+</body>

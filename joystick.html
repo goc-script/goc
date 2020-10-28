@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Joystick demo</title>
+</head>
+<body>
+    <script src="https://gocscript.000webhostapp.com/goc.js"></script>
+    <script>
+        goc.createCanvas( 700, 700 );
+
+        var box = goc.box(200, 200);
+
+        goc.createJoystick(box);
+
+        goc.update((e, c)=>{
+
+        });
+
+        goc.draw((c, e)=>{
+            c.clearRect(0, 0, c.canvas.width, c.canvas.height);
+            box.draw(c);
+        });
+
+        goc.start();
+    </script>
+</body>
+</html>
